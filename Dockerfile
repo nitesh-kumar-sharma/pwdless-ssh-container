@@ -6,7 +6,11 @@ RUN apk add --no-cache \
 			  bash \
 			  openssh \
 			  wget \
-			  openjdk8-jre
+			  openjdk8-jre \
+			  procps
+			  
+ENV JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk \
+	PATH=$PATH:${JAVA_HOME}/bin
 
 #******************** configure passwordless SSH *****************
 RUN /usr/bin/ssh-keygen -A
