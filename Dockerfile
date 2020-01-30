@@ -17,5 +17,8 @@ RUN ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa \
 	&& sed -i s/#Port.*/Port\ 22/ /etc/ssh/sshd_config
 
 RUN echo "root:latest" | chpasswd
-COPY ./config/ /etc/ssh/
-ENTRYPOINT ["bash","-C","/usr/sbin/sshd"]
+ADD ssh_config /etc/ssh/
+CMD ["/usr/sbin/sshd","-D"]
+#COPY ./config/ /etc/ssh/
+#RUN chmod 777 /usr/sbin/sshd
+#ENTRYPOINT ["bash","-C","/usr/sbin/sshd"]
