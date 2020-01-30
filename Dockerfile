@@ -16,6 +16,6 @@ RUN ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa \
 	&& sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config \
 	&& sed -i s/#Port.*/Port\ 22/ /etc/ssh/sshd_config
 
-RUN echo "root:root" | chpasswd
+RUN echo "root:latest" | chpasswd
 COPY ./config/ /etc/ssh/
-ENTRYPOINT ["bash","-C","/etc/ssh/bootstrap.sh"]
+ENTRYPOINT ["bash","-C","/usr/sbin/sshd"]
