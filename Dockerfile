@@ -2,13 +2,17 @@ FROM alpine:latest
 EXPOSE 22
 USER root
 #******************** Install packages ***************************	
-RUN apk add --no-cache \
-			  bash \
-			  openssh \
-			  wget \
-			  openjdk8-jre \
-			  procps
-			  
+RUN apk --no-cache \
+		--update add \
+		  bash \
+		  curl \
+		  openssh \
+		  wget \
+		  openjdk8-jre \
+		  sudo \
+		  procps \
+		  rsync
+		  
 ENV JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk \
 	PATH=$PATH:${JAVA_HOME}/bin
 
@@ -23,6 +27,3 @@ RUN ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa \
 RUN echo "root:latest" | chpasswd
 ADD ssh_config /etc/ssh/
 CMD ["/usr/sbin/sshd","-D"]
-#COPY ./config/ /etc/ssh/
-#RUN chmod 777 /usr/sbin/sshd
-#ENTRYPOINT ["bash","-C","/usr/sbin/sshd"]
